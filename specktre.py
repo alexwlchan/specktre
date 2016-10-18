@@ -5,11 +5,31 @@ import collections
 import itertools
 import math
 import random
+import time
 
 from PIL import Image, ImageDraw, ImageColor
 
 
 Color = collections.namedtuple('Color', ['red', 'green', 'blue'])
+
+Settings = collections.namedtuple(
+    'Settings', ['width', 'height', 'start_color', 'end_color']
+)
+
+SEED = int(time.time())
+random.seed(SEED)
+
+
+def filename_from_settings(settings):
+    components = [
+        'specktre',
+        'w=%s' % settings.width,
+        'h=%s' % settings.height,
+        'start=%s' % '-'.join([str(s) for s in settings.start_color]),
+        'end=%s' % '-'.join([str(s) for s in settings.end_color]),
+        'seed=%s' % SEED,
+    ]
+    return '_'.join(components) + '.png'
 
 
 def random_rgb_value(lower, upper):
@@ -41,27 +61,29 @@ def random_color(start, end):
         yield Color(red=red, green=green, blue=blue)
 
 
-def generate_squares(sq_size, width, height):
+def generate_squares(width, height, sq_size=25):
     """Generates the square corners, for use in PIL drawings."""
     for x in range(0, width, sq_size):
         for y in range(0, height, sq_size):
-            print(x, y)
             yield [x, y, x + sq_size, y + sq_size]
 
 
-def draw_speckled_wallpaper(width=200, height=200):
-    image = Image.new(mode='RGB', size=(width, height))
-    n = 5
-    draw_square = ImageDraw.Draw(image).rectangle
-    squares = generate_squares(40, 200, 200)
-    for sq, color in zip(squares, random_color(
-        Color(255, 0, 0),
-        Color(0, 255, 0),
-    )):
-        draw_square(sq, fill=color)
+def draw_speckled_wallpaper(settings):
+    im = Image.new(mode='RGB', size=(settings.width, settings.height))
+    squares = generate_squares(width=settings.width, height=settings.height)
+    colors = random_color(settings.start_color, settings.end_color)
+    for sq, color in zip(squares, colors):
+        ImageDraw.Draw(im).rectangle(sq, fill=color)
 
-    image.save("chessboard-pil.png")
+    return im
 
 
 if __name__ == '__main__':
-    draw_speckled_wallpaper()
+    settings = Settings(
+        width=400,
+        height=400,
+        start_color=Color(0, 0, 255),
+        end_color=Color(10, 10, 160),
+    )
+    im = draw_speckled_wallpaper(settings)
+    im.save(filename_from_settings(settings))
