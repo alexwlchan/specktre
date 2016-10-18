@@ -41,23 +41,19 @@ def random_color(start, end):
         yield Color(red=red, green=green, blue=blue)
 
 
-def square(i, j):
-    "Return the square corners, suitable for use in PIL drawings"
-    return list(map(sq_start, [i, j, i + 1, j + 1]))
+def generate_squares(sq_size, width, height):
+    """Generates the square corners, for use in PIL drawings."""
+    for x in range(0, width, sq_size):
+        for y in range(0, height, sq_size):
+            print(x, y)
+            yield [x, y, x + sq_size, y + sq_size]
 
 
-def sq_start(i):
-    "Return the x/y start coord of the square at column/row i."
-    return i * 200 / 5
-
-
-def draw_chessboard():
-    image = Image.new(mode='RGB', size=(200, 200))
+def draw_speckled_wallpaper(width=200, height=200):
+    image = Image.new(mode='RGB', size=(width, height))
     n = 5
     draw_square = ImageDraw.Draw(image).rectangle
-    squares = (square(i, j)
-               for j in range(n)
-               for i in range(n))
+    squares = generate_squares(40, 200, 200)
     for sq, color in zip(squares, random_color(
         Color(255, 0, 0),
         Color(0, 255, 0),
@@ -68,4 +64,4 @@ def draw_chessboard():
 
 
 if __name__ == '__main__':
-    draw_chessboard()
+    draw_speckled_wallpaper()
