@@ -153,4 +153,3 @@ if __name__ == '__main__':
     draw_tiling(generate_squares,   filename='squares.png')
     draw_tiling(generate_triangles, filename='triangles.png')
     draw_tiling(generate_hexagons,  filename='hexagons.png')
-    # draw_tiling(generate_unit_hexagons,  filename='uhexagons.png')
