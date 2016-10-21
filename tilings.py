@@ -118,7 +118,7 @@ def generate_unit_hexagons(image_width, image_height):
     h = math.sin(math.pi / 3)
 
     for x in range(-1, image_width, 3):
-        for y in range(int(image_height / h)):
+        for y in range(-1, int(image_height / h)):
 
             # Add the horizontal offset on every other row
             x_ = x if (y % 2 == 0) else x + 1.5
