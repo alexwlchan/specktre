@@ -15,17 +15,13 @@ Options:
 """
 
 import collections
-import math
-import random
 import sys
 
 import docopt
 from PIL import Image, ImageDraw
 
-from tilings import generate_squares, generate_triangles
+from colors import Color, random_color
 
-
-Color = collections.namedtuple('Color', ['red', 'green', 'blue'])
 
 Settings = collections.namedtuple(
     'Settings', ['width', 'height', 'start_color', 'end_color']
@@ -89,35 +85,6 @@ def filename_from_settings(settings):
         'end=%s' % '-'.join([str(s) for s in settings.end_color]),
     ]
     return '_'.join(components) + '.png'
-
-
-def random_rgb_value(lower, upper):
-    """
-    Returns a random value between (lower, upper), where ``lower``
-    and ``upper`` are RGB values in [0, 255].
-    """
-    # Normalise to a scale 0.0 - 1.0
-    lower /= 255.0
-    upper /= 255.0
-
-    # Next square both values.  We'll take the average of the squares, then
-    # take the square root again.  I'm trying to get a better sample of the
-    # overall colour space.  See https://www.youtube.com/watch?v=LKnqECcg6Gw
-    lower **= 2
-    upper **= 2
-
-    # Pick a random value, then normalise to get back to 0-255 values
-    value = random.uniform(lower, upper)
-    return int(math.sqrt(value) * 255)
-
-
-def random_color(start, end):
-    """Generates random colours between ``start`` and ``end``."""
-    while True:
-        red   = random_rgb_value(*sorted([start.red,   end.red]))
-        green = random_rgb_value(*sorted([start.green, end.green]))
-        blue  = random_rgb_value(*sorted([start.blue,  end.blue]))
-        yield Color(red=red, green=green, blue=blue)
 
 
 def draw_speckled_wallpaper(settings):
