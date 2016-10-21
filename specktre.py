@@ -4,7 +4,7 @@
 Generate checkerboard wallpaper images.
 
 Usage:
-  specktre.py new --size=<size> --height=<height> --start=<start> --end=<end>
+  specktre.py new --size=<size> --start=<start> --end=<end>
   specktre.py -h
 
 Options:
