@@ -18,6 +18,9 @@ Options:
 """
 
 import collections
+import os
+import random
+import string
 import sys
 
 import docopt
@@ -90,15 +93,19 @@ def parse_args():
     )
 
 
-def filename_from_settings(settings):
-    components = [
-        'specktre',
-        'w=%s' % settings.width,
-        'h=%s' % settings.height,
-        'start=%s' % '-'.join([str(s) for s in settings.start_color]),
-        'end=%s' % '-'.join([str(s) for s in settings.end_color]),
-    ]
-    return '_'.join(components) + '.png'
+def _generate_filenames():
+    while True:
+        random_stub = ''.join([
+            random.choice(string.ascii_letters + string.digits)
+            for _ in range(5)
+        ])
+        yield 'specktre_%s.png' % random_stub
+
+
+def get_new_filename():
+    for filename in _generate_filenames():
+        if not os.path.exists(filename):
+            return filename
 
 
 def draw_speckled_wallpaper(settings):
@@ -114,14 +121,6 @@ def draw_speckled_wallpaper(settings):
 if __name__ == '__main__':
     settings = parse_args()
     im = draw_speckled_wallpaper(settings)
-    filename = filename_from_settings(settings)
+    filename = get_new_filename()
     im.save(filename)
     print('Saved new wallpaper as %s' % filename)
-
-    im = Image.new(mode='RGB', size=(100, 100))
-    triangles = generate_triangles(100, 100)
-    colors = random_color(settings.start_color, settings.end_color)
-    for sq, color in zip(triangles, colors):
-        ImageDraw.Draw(im).polygon(sq, fill=color)
-
-    im.save('triangles.png')
