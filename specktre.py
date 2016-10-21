@@ -4,13 +4,12 @@
 Generate checkerboard wallpaper images.
 
 Usage:
-  specktre.py new --width=<width> --height=<height> --start=<start> --end=<end>
+  specktre.py new --size=<size> --height=<height> --start=<start> --end=<end>
   specktre.py -h
 
 Options:
   -h --help          Show this screen.
-  --width=<width>    Width (in pixels)
-  --height=<height>  Height (in pixels)
+  --size=<size>      Size in pixels - WxH
   --start=<start>    Start of the color range (RGB tuple, e.g '255,0,0')
   --end=<end>        End of the color range (RGB tuple, e.g. '0,255,0')
 """
@@ -37,14 +36,19 @@ def parse_args():
     args = docopt.docopt(__doc__)
 
     try:
-        width = int(args['--width'])
+        width, height = args['--size'].split('x')
+    except ValueError:
+        sys.exit('--size should be in the form WxH; got %s' % args['--size'])
+
+    try:
+        width = int(width)
         if width <= 0:
             sys.exit('Width should be positive; got %s' % width)
     except ValueError:
         sys.exit('Width should be an integer; got %s' % width)
 
     try:
-        height = int(args['--height'])
+        height = int(height)
         if height <= 0:
             sys.exit('Height should be positive; got %s' % height)
     except ValueError:
