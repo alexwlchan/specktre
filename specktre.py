@@ -4,7 +4,7 @@
 Generate checkerboard wallpaper images.
 
 Usage:
-  specktre.py new --size=<size> --start=<start> --end=<end>
+  specktre.py new --size=<size> --start=<start> --end=<end> [--squares | --triangles | --hexagons]
   specktre.py -h
 
 Options:
@@ -12,6 +12,9 @@ Options:
   --size=<size>      Size in pixels - WxH
   --start=<start>    Start of the color range (RGB tuple, e.g '255,0,0')
   --end=<end>        End of the color range (RGB tuple, e.g. '0,255,0')
+  --squares          Tile with squares.
+  --triangles        Tile with triangles.
+  --hexagons         Tile with hexagons.
 """
 
 import collections
@@ -21,15 +24,25 @@ import docopt
 from PIL import Image, ImageDraw
 
 from colors import Color, random_color
+from tilings import generate_squares, generate_triangles, generate_hexagons
 
 
 Settings = collections.namedtuple(
-    'Settings', ['width', 'height', 'start_color', 'end_color']
+    'Settings', ['generator', 'width', 'height', 'start_color', 'end_color']
 )
 
 
 def parse_args():
     args = docopt.docopt(__doc__)
+
+    if args['--squares']:
+        generator = generate_squares
+    elif args['--triangles']:
+        generator = generate_triangles
+    elif args['--hexagons']:
+        generator = generate_hexagons
+    else:
+        generator = generate_squares
 
     try:
         width, height = args['--size'].split('x')
@@ -89,7 +102,7 @@ def filename_from_settings(settings):
 
 def draw_speckled_wallpaper(settings):
     im = Image.new(mode='RGB', size=(settings.width, settings.height))
-    squares = generate_squares(settings.width, settings.height)
+    squares = settings.generator(settings.width, settings.height)
     colors = random_color(settings.start_color, settings.end_color)
     for sq, color in zip(squares, colors):
         ImageDraw.Draw(im).polygon(sq, fill=color)
