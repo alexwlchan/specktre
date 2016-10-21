@@ -82,6 +82,7 @@ def parse_args():
         sys.exit('End color should be an X,Y,Z tuple; got %s' % height)
 
     return Settings(
+        generator=generator,
         width=width,
         height=height,
         start_color=start_color,
