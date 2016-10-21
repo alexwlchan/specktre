@@ -19,7 +19,6 @@ import collections
 import math
 import random
 import sys
-import time
 
 import docopt
 from PIL import Image, ImageDraw
@@ -32,9 +31,6 @@ Color = collections.namedtuple('Color', ['red', 'green', 'blue'])
 Settings = collections.namedtuple(
     'Settings', ['width', 'height', 'start_color', 'end_color']
 )
-
-SEED = int(time.time())
-random.seed(SEED)
 
 
 def parse_args():
@@ -87,7 +83,6 @@ def filename_from_settings(settings):
         'h=%s' % settings.height,
         'start=%s' % '-'.join([str(s) for s in settings.start_color]),
         'end=%s' % '-'.join([str(s) for s in settings.end_color]),
-        'seed=%s' % SEED,
     ]
     return '_'.join(components) + '.png'
 
