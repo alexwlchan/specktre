@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 """
-Generate regular tilings of the plane with PIL.
+Generate regular tilings of the plane with Pillow.
 
 Diagrams and background to this code are on my blog:
 http://alexwlchan.net/2016/10/tiling-the-plane-with-pillow/
@@ -18,8 +18,8 @@ CANVAS_HEIGHT = 400
 
 
 def _scale_coordinates(generator, image_width, image_height, side_length=50):
-    scaled_width = int(image_width / side_length)
-    scaled_height = int(image_height / side_length)
+    scaled_width = int(image_width / side_length) + 1
+    scaled_height = int(image_height / side_length) + 1
 
     for coords in generator(scaled_width, scaled_height):
         yield [(x * side_length, y * side_length) for (x, y) in coords]
@@ -71,7 +71,7 @@ def generate_unit_triangles(image_width, image_height):
     h = math.sin(math.pi / 3)
 
     for x in range(-1, image_width):
-        for y in range(int(image_height / h) + 1):
+        for y in range(int(image_height / h)):
 
             # Add a horizontal offset on odd numbered rows
             x_ = x if (y % 2 == 0) else x + 0.5
@@ -118,7 +118,7 @@ def generate_unit_hexagons(image_width, image_height):
     h = math.sin(math.pi / 3)
 
     for x in range(-1, image_width, 3):
-        for y in range(int(image_height / h) + 1):
+        for y in range(int(image_height / h)):
 
             # Add the horizontal offset on every other row
             x_ = x if (y % 2 == 0) else x + 1.5
