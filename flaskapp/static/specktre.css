@@ -1,0 +1,30 @@
+body {
+    font-size: 1.4em;
+    background-image: url('/background');
+}
+footer { font-size: 0.75em; margin-top: 2.5em; }
+input {
+  font-family: Menlo, Monaco, monospace;
+}
+.container {
+  max-width: 800px;
+}
+img {
+  max-width: 100%;
+}
+.lower_group {
+  padding-top:    5px;
+  padding-bottom: 5px;
+  margin-bottom:  15px;
+  margin-top: 0px;
+}
+.errors {
+  color: #c01c11;
+}
+.errors a {
+  color: #c01c11;
+  text-decoration: underline;
+}
+.errors a:hover {
+  text-decoration: none;
+}

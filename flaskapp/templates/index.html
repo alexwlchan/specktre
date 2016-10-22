@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>Specktre</h1>
+</div>
+
+<p>Pygmentizr is an tool for highlighting code using the <a href="http://pygments.org/">Pygments library</a>. You can enter some code below, select the language, and it gives you the rendered HTML suitable to drop into an email, forum post or web page.</p>
+
+<hr>
+
+{% if errors %}
+<ul class="errors">
+  {% for error in errors %}
+  <li>{{ error|safe }}</li>
+  {% endfor %}
+</ul><br/>
+{% endif %}
+
+<form action="" method="post" name="login" id="specktreForm">
+  {{ form.hidden_tag() }}
+  <div class="row">
+    <div class="form-group col-xs-6">
+      <label for="shape">shape</label>
+      {{ form.shape(class="form-control", id="shape") }}
+    </div>
+    <div class="form-group col-xs-6">
+      <label for="sizeClassControl">size class</label>
+      {{ form.size_class(class="form-control", id="sizeClassControl") }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-6 col-sm-3 lower_group" id="colorAgroup">
+      <label for="colorA">start colour</label>
+      {{ form.colorA(size="9", class="form-control", id="colorA", placeholder="#ffffff" ) }}
+    </div>
+    <div class="form-group col-xs-6 col-sm-3 lower_group" id="colorBgroup">
+      <label for="colorB">end colour</label>
+      {{ form.colorB(size="9", class="form-control", id="colorB", placeholder="#000000" ) }}
+    </div>
+    <div class="form-group col-xs-6 col-sm-3 lower_group">
+      <label for="width">width (px)</label>
+      {{ form.width(size="9", type="tel", class="form-control", id="width", placeholder="800") }}
+    </div>
+    <div class="form-group col-xs-6 col-sm-3 lower_group">
+      <label for="width">height (px)</label>
+      {{ form.height(size="9", type="tel", class="form-control", id="height", placeholder="600") }}
+    </div>
+  </div>
+  <p><button type="submit" id="submitButton" class="btn btn-primary pull-right">Make my wallpaper!</button></p>
+</form>
+
+<br/>
+
+{% if shape_url %}
+<hr>
+<p>Here's your new wallpaper:</p>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <a href="/render/{{ shape_url }}">
+      <img style="border: 3px solid white;" src="/render/{{ shape_url }}">
+    </a>
+  </div>
+</div>
+{% endif %}
+
+<script type="text/javascript" src="{{ url_for('static', filename='specktre.js') }}"></script>
+
+{% endblock %}
