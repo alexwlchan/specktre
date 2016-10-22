@@ -63,6 +63,10 @@ The images are randomly generated, so each run will create a new pattern of colo
 
 [picker]: http://hslpicker.com
 
+## What's in the name?
+
+The word "speckled" came to mind when describing this pattern, and I wrote the first version shortly after the James Bond film *SPECTRE* had been released.
+
 ## License
 
 The code is licensed under the MIT license.
