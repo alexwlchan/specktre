@@ -19,6 +19,11 @@ SHAPE_TO_GENERATOR = {
     'hexagons': generate_hexagons,
 }
 
+TEMPDIR = tempfile.mkdtemp()
+print(TEMPDIR)
+os.makedirs(TEMPDIR, exist_ok=True)
+cache = {}
+
 
 def hex_to_rgb(hex_str):
     if hex_str.startswith('#'):
@@ -39,7 +44,7 @@ def index():
     shape_url = None
     if form.validate_on_submit():
         path = os.path.join(
-            'tmp', os.path.basename(
+            TEMPDIR, os.path.basename(
                 tempfile.mkstemp(prefix='specktre_', suffix='.png')[1]
             )
         )
@@ -51,9 +56,9 @@ def index():
             end_color=hex_to_rgb(form.colorB.data),
             name=path,
         )
-        os.makedirs('tmp', exist_ok=True)
         save_speckled_wallpaper(settings)
         shape_url = os.path.basename(path)
+        cache[shape_url] = path
         print('Form validated successfully!')
     else:
         errors.extend(form.shape.errors)
@@ -75,11 +80,13 @@ def missing_image(e):
     return render_template('404.html')
 
 
-@app.route('/render/<filename>')
-def display_image(filename):
-    if not os.path.exists(os.path.join('tmp', filename)):
+@app.route('/render/<shape_url>')
+def display_image(shape_url):
+    try:
+        filename = cache[shape_url]
+    except KeyError:
         abort(404)
-    return send_file(os.path.join('..', 'tmp', filename))
+    return send_file(os.path.join(TEMPDIR, filename))
     
     
 @app.route('/background')

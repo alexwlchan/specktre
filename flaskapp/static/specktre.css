@@ -2,7 +2,11 @@ body {
     font-size: 1.4em;
     background-image: url('/background');
 }
-footer { font-size: 0.75em; margin-top: 2.5em; }
+footer {
+  font-size: 0.75em;
+  margin-top: 2.5em;
+  margin-bottom: 2em;
+}
 input {
   font-family: Menlo, Monaco, monospace;
 }
@@ -15,6 +19,7 @@ img {
 .lower_group {
   padding-top:    5px;
   padding-bottom: 5px;
+  padding-top: 10px;
   margin-bottom:  15px;
   margin-top: 0px;
 }
