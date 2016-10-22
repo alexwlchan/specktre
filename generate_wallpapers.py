@@ -36,6 +36,11 @@ wallpaper_config = [
     # iPad: green triangles on the lock screen, black on the home screen
     (generate_triangles, 2524, 2524, Color(18, 18, 18),  Color(11, 11, 11),  'ipad-lock'),
     (generate_triangles, 2524, 2524, Color(11, 153, 46), Color(6, 86, 9),    'ipad-home'),
+
+    # Demo wallpapers
+    (generate_squares,   400, 400, Color(178, 26, 16), Color(136, 25, 17),   'demo_sq'),
+    (generate_triangles, 400, 400, Color(255, 204, 0), Color(255, 238, 56),  'demo_tr'),
+    (generate_hexagons,  400, 400, Color(56, 56, 255), Color(0, 0, 194),     'demo_hex'),
 ]
 
 
