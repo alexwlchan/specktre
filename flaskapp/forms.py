@@ -2,7 +2,7 @@
 
 import string
 
-from flask_wtf import FlaskForm
+from flask_wtf import Form
 from wtforms import IntegerField, SelectField, TextField
 from wtforms.validators import DataRequired, ValidationError
 
@@ -43,7 +43,7 @@ def validate_height(form, field):
     _validate_size(field.data, 'height')
 
 
-class SpecktreForm(FlaskForm):
+class SpecktreForm(Form):
     """Form for getting options for Specktre."""
     colorA = TextField('color A', validators=[DataRequired(), validate_hex])
     colorB = TextField('color B', validators=[DataRequired(), validate_hex])
