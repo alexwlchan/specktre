@@ -4,7 +4,7 @@
 Generate checkerboard wallpaper images.
 
 Usage:
-  specktre.py new --size=<size> --start=<start> --end=<end> [--squares | --triangles | --hexagons]
+  specktre.py new --size=<size> --start=<start> --end=<end> [--squares | --triangles | --hexagons] [--name=<name>]
   specktre.py -h
 
 Options:
@@ -15,6 +15,7 @@ Options:
   --squares          Tile with squares.
   --triangles        Tile with triangles.
   --hexagons         Tile with hexagons.
+  --name=<name>      (Optional) Name of the file to save to.
 """
 
 import collections
@@ -30,8 +31,8 @@ from colors import Color, random_color
 from tilings import generate_squares, generate_triangles, generate_hexagons
 
 
-Settings = collections.namedtuple(
-    'Settings', ['generator', 'width', 'height', 'start_color', 'end_color']
+Settings = collections.namedtuple('Settings',
+    ['generator', 'width', 'height', 'start_color', 'end_color', 'name']
 )
 
 
@@ -84,12 +85,15 @@ def parse_args():
     except ValueError:
         sys.exit('End color should be an X,Y,Z tuple; got %s' % height)
 
+    name = args['--name']
+
     return Settings(
         generator=generator,
         width=width,
         height=height,
         start_color=start_color,
         end_color=end_color,
+        name=name,
     )
 
 
@@ -118,9 +122,16 @@ def draw_speckled_wallpaper(settings):
     return im
 
 
-if __name__ == '__main__':
-    settings = parse_args()
+def save_speckled_wallpaper(settings):
     im = draw_speckled_wallpaper(settings)
-    filename = get_new_filename()
+    if settings.name:
+        filename = settings.name
+    else:
+        filename = get_new_filename()
     im.save(filename)
     print('Saved new wallpaper as %s' % filename)
+
+
+if __name__ == '__main__':
+    settings = parse_args()
+    save_speckled_wallpaper(settings)
