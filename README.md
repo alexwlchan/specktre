@@ -11,6 +11,26 @@ Specktre is a tool for generating low-contrast desktop wallpapers from tiling pa
 </table>
 
 It can be used as a Python library, or invoked from the command-line.
+You can also [try it in your browser][demo]!
+
+[demo]: https://alexwlchan.net/experiments/specktre/
+
+## What's in the repo?
+
+The most interesting parts are in these files:
+
+*   `tilings.py` -- draw regular tilings of the plane with Pillow.
+*   `colors.py` -- a generator of random colour shades.
+*   `specktre.py` -- a bit of drawing code (and lots of argument parsing code) that ties both files together, and presents a command-line tool for using them.
+
+These files contain the core drawing logic, and are the most carefully written and reviewed parts of the repo.
+
+The `flaskapp` folder contains some hacked-together code used to serve the live demo.
+I'll clean it up at some point, but there's probably nothing very interesting in that folder.
+
+## What’s in the name?
+
+The word "speckled" came to mind when describing this pattern, and I wrote the first version shortly after the James Bond film *SPECTRE* had been released.
 
 ## Installation
 
@@ -77,10 +97,6 @@ and use it at <http://localhost:7007> in your browser.
 The images are randomly generated, so each run will create a new pattern of colours.
 
 [picker]: http://hslpicker.com
-
-## What’s in the name?
-
-The word "speckled" came to mind when describing this pattern, and I wrote the first version shortly after the James Bond film *SPECTRE* had been released.
 
 ## License
 
