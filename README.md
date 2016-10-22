@@ -30,6 +30,13 @@ $ source venv/bin/activate
 $ pip install -r requirements.txt
 ```
 
+There's also a Flask app you can use, if you prefer a graphical interface.
+You need to install some extra dependencies:
+
+```console
+$ pip install -r flask_requirements.txt
+```
+
 [zip]: https://github.com/alexwlchan/specktre/archive/master.zip
 [pillow]: https://github.com/python-pillow/Pillow
 [docopt]: https://github.com/docopt/docopt
@@ -59,11 +66,19 @@ The `--start` and `--end` arguments indicate the colours that will be used to ge
 It's a tuple of R,G,B colours.
 I recommend [HSL Picker][picker] as a free tool for finding RGB colour sets you like.
 
+Alternatively, you can use the Flask app:
+
+```console
+$ python manage.py
+```
+
+and use it at <http://localhost:7007> in your browser.
+
 The images are randomly generated, so each run will create a new pattern of colours.
 
 [picker]: http://hslpicker.com
 
-## What's in the name?
+## What’s in the name?
 
 The word "speckled" came to mind when describing this pattern, and I wrote the first version shortly after the James Bond film *SPECTRE* had been released.
 

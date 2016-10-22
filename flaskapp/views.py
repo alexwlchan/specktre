@@ -20,8 +20,7 @@ SHAPE_TO_GENERATOR = {
 }
 
 TEMPDIR = tempfile.mkdtemp()
-print(TEMPDIR)
-os.makedirs(TEMPDIR, exist_ok=True)
+os.makedirs(TEMPDIR)
 cache = {}
 
 
