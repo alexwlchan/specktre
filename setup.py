@@ -3,7 +3,6 @@
 
 import codecs
 import os
-import sys
 
 from setuptools import find_packages, setup
 
@@ -15,12 +14,6 @@ def local_file(name):
 SOURCE = local_file('src')
 README = local_file('README.rst')
 long_description = codecs.open(README, encoding='utf-8').read()
-
-
-# Stealing this from Kenneth Reitz
-if sys.argv[-1] == 'publish':
-    os.system('python setup.py sdist upload')
-    sys.exit()
 
 
 setup(
@@ -35,7 +28,7 @@ setup(
 
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
-        'Development Status :: 5 - Production / Stable',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Other Audience',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 2',
