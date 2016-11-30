@@ -21,6 +21,15 @@ To install specktre, just run:
 
    $ pip install specktre
 
+Usage
+*****
+
+To see a usage message, just run:
+
+.. code-block:: console
+
+   $ specktre --help
+
 License
 *******
 
