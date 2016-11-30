@@ -6,12 +6,7 @@ tiling patterns.
 
 Here are some examples of the patterns it produces:
 
-.. image:: output/demo_sq.png
-   :scale: 50 %
-.. image:: output/demo_tr.png
-   :scale: 50 %
-.. image:: output/demo_hex.png
-   :scale: 50 %
+.. image:: demo.png
 
 It can be used as a Python library, or invoked from the command-line.
 You can also `try it in your browser
