@@ -4,8 +4,7 @@
 Generate checkerboard wallpaper images.
 
 Usage:
-  specktre.py new --size=<size> --start=<start> --end=<end>
-                  [--squares | --triangles | --hexagons] [--name=<name>]
+  specktre.py new --size=<size> --start=<start> --end=<end> [--squares | --triangles | --hexagons] [--name=<name>]
   specktre.py -h
 
 Options:
@@ -17,7 +16,7 @@ Options:
   --triangles        Tile with triangles.
   --hexagons         Tile with hexagons.
   --name=<name>      (Optional) Name of the file to save to.
-"""
+""" # noqa
 
 import collections
 import os
@@ -28,12 +27,37 @@ import sys
 import docopt
 from PIL import Image, ImageDraw
 
-from colors import Color, random_color
-from tilings import generate_squares, generate_triangles, generate_hexagons
+from .colors import Color, random_color
+from .tilings import generate_squares, generate_triangles, generate_hexagons
 
 
 Settings = collections.namedtuple('Settings', [
     'generator', 'width', 'height', 'start_color', 'end_color', 'name'])
+
+
+def _positive_integer_arg(arg_value, arg_name):
+    """Checks a value is a positive integer, or exists."""
+    try:
+        value = int(arg_value)
+        if value <= 0:
+            sys.exit('%s should be positive; got %r' % (arg_name, arg_value))
+        return value
+    except ValueError:
+        sys.exit('%s should be an integer; got %r' % (arg_name, arg_value))
+
+
+def _parse_color_components(arg_value, arg_name):
+    """Checks a value can be parsed as an RGB tuple."""
+    try:
+        r, g, b = arg_value.split(',')
+        r = int(r)
+        g = int(g)
+        b = int(b)
+        if any(0 > x or 255 < x for x in (r, g, b)):
+            sys.exit('Color components should be 0 < X < 255')
+        return Color(r, g, b)
+    except ValueError:
+        sys.exit('%s should be an R,G,B tuple; got %r' % (arg_name, arg_value))
 
 
 def parse_args():
@@ -53,41 +77,12 @@ def parse_args():
     except ValueError:
         sys.exit('--size should be in the form WxH; got %s' % args['--size'])
 
-    try:
-        width = int(width)
-        if width <= 0:
-            sys.exit('Width should be positive; got %s' % width)
-    except ValueError:
-        sys.exit('Width should be an integer; got %s' % width)
+    width = _positive_integer_arg(width, arg_name='Width')
+    height = _positive_integer_arg(height, arg_name='Height')
 
-    try:
-        height = int(height)
-        if height <= 0:
-            sys.exit('Height should be positive; got %s' % height)
-    except ValueError:
-        sys.exit('Height should be an integer; got %s' % height)
-
-    try:
-        r, g, b = args['--start'].split(',')
-        r = int(r)
-        g = int(g)
-        b = int(b)
-        if any(0 > x or 255 < x for x in (r, g, b)):
-            sys.exit('Color components should be 0 < X < 255')
-        start_color = Color(r, g, b)
-    except ValueError:
-        sys.exit('Start color should be an X,Y,Z tuple; got %s' % height)
-
-    try:
-        r, g, b = args['--end'].split(',')
-        r = int(r)
-        g = int(g)
-        b = int(b)
-        if any(0 > x or 255 < x for x in (r, g, b)):
-            sys.exit('Color components should be 0 < X < 255')
-        end_color = Color(r, g, b)
-    except ValueError:
-        sys.exit('End color should be an X,Y,Z tuple; got %s' % height)
+    start_color = _parse_color_components(args['--start'],
+                                          arg_name='Start color')
+    end_color = _parse_color_components(args['--end'], arg_name='End color')
 
     name = args['--name']
 
@@ -136,6 +131,6 @@ def save_speckled_wallpaper(settings):
     print('Saved new wallpaper as %s' % filename)
 
 
-if __name__ == '__main__':
+def main():
     settings = parse_args()
     save_speckled_wallpaper(settings)
