@@ -13,7 +13,7 @@ import math
 
 from PIL import Image, ImageDraw
 
-CANVAS_WIDTH  = 400
+CANVAS_WIDTH  = 400  # noqa
 CANVAS_HEIGHT = 400
 
 
@@ -78,6 +78,7 @@ def generate_unit_triangles(image_width, image_height):
 
             yield [(x_, y * h), (x_+1, y * h), (x_+0.5, (y+1) * h)]
             yield [(x_+1, y * h), (x_+1.5, (y+1) * h), (x_+0.5, (y+1) * h)]
+
 
 def generate_triangles(*args, **kwargs):
     """Generate coordinates for a tiling of triangles."""

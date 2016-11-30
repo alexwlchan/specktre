@@ -1,0 +1,2 @@
+lint:
+	tox -e lint

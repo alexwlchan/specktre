@@ -1,0 +1,20 @@
+language: python
+sudo: false
+
+python:
+  - "3.5"
+
+cache:
+  directories:
+    - $HOME/.cache/pip
+
+env:
+  matrix:
+    - env: TASK=lint
+
+script:
+  - make $TASK
+
+install:
+  - "pip install -U pip setuptools"
+  - "pip install -U tox"
