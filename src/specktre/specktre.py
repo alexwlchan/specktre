@@ -4,7 +4,8 @@
 Generate checkerboard wallpaper images.
 
 Usage:
-  specktre.py new --size=<size> --start=<start> --end=<end> [--squares | --triangles | --hexagons] [--name=<name>]
+  specktre.py new --size=<size> --start=<start> --end=<end>
+                  [--squares | --triangles | --hexagons] [--name=<name>]
   specktre.py -h
 
 Options:
@@ -31,9 +32,8 @@ from colors import Color, random_color
 from tilings import generate_squares, generate_triangles, generate_hexagons
 
 
-Settings = collections.namedtuple('Settings',
-    ['generator', 'width', 'height', 'start_color', 'end_color', 'name']
-)
+Settings = collections.namedtuple('Settings', [
+    'generator', 'width', 'height', 'start_color', 'end_color', 'name'])
 
 
 def parse_args():
@@ -69,7 +69,9 @@ def parse_args():
 
     try:
         r, g, b = args['--start'].split(',')
-        r = int(r); g = int(g); b = int(b)
+        r = int(r)
+        g = int(g)
+        b = int(b)
         if any(0 > x or 255 < x for x in (r, g, b)):
             sys.exit('Color components should be 0 < X < 255')
         start_color = Color(r, g, b)
@@ -78,7 +80,9 @@ def parse_args():
 
     try:
         r, g, b = args['--end'].split(',')
-        r = int(r); g = int(g); b = int(b)
+        r = int(r)
+        g = int(g)
+        b = int(b)
         if any(0 > x or 255 < x for x in (r, g, b)):
             sys.exit('Color components should be 0 < X < 255')
         end_color = Color(r, g, b)

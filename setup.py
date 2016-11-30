@@ -12,14 +12,9 @@ def local_file(name):
     return os.path.relpath(os.path.join(os.path.dirname(__file__), name))
 
 
-def local_read(name):
-    return codecs.open(name).read()
-
-
 SOURCE = local_file('src')
-README = local_read('README.rst')
-HISTORY = local_read('HISTORY.rst')
-long_description = u'\n\n'.join([README, HISTORY])
+README = local_file('README.rst')
+long_description = codecs.open(README, encoding='utf-8').read()
 
 
 # Stealing this from Kenneth Reitz
@@ -52,9 +47,7 @@ setup(
     ],
     keywords='images wallpaper',
     packages=find_packages(SOURCE),
-    package_data={'': ['LICENSE', 'README.rst', 'HISTORY.rst']},
     package_dir={'': SOURCE},
-    include_package_data=True,
     install_requires=[
         'docopt',
         'Pillow',
