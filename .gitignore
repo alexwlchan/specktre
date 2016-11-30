@@ -3,3 +3,5 @@ tmp
 .tox
 build/*
 dist/*
+.cache
+.coverage

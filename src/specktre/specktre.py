@@ -27,23 +27,13 @@ import sys
 import docopt
 from PIL import Image, ImageDraw
 
+from .cli import check_positive_integer
 from .colors import Color, random_color
 from .tilings import generate_squares, generate_triangles, generate_hexagons
 
 
 Settings = collections.namedtuple('Settings', [
     'generator', 'width', 'height', 'start_color', 'end_color', 'name'])
-
-
-def _positive_integer_arg(arg_value, arg_name):
-    """Checks a value is a positive integer, or exists."""
-    try:
-        value = int(arg_value)
-        if value <= 0:
-            sys.exit('%s should be positive; got %r' % (arg_name, arg_value))
-        return value
-    except ValueError:
-        sys.exit('%s should be an integer; got %r' % (arg_name, arg_value))
 
 
 def _parse_color_components(arg_value, arg_name):
@@ -77,8 +67,8 @@ def parse_args():
     except ValueError:
         sys.exit('--size should be in the form WxH; got %s' % args['--size'])
 
-    width = _positive_integer_arg(width, arg_name='Width')
-    height = _positive_integer_arg(height, arg_name='Height')
+    width = check_positive_integer(name='Width', value=width)
+    height = check_positive_integer(name='Height', value=height)
 
     start_color = _parse_color_components(args['--start'],
                                           arg_name='Start color')
