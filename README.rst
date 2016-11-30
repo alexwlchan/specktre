@@ -6,7 +6,7 @@ tiling patterns.
 
 Here are some examples of the patterns it produces:
 
-.. image:: demo.png
+.. image:: output/demo.png
 
 It can be used as a Python library, or invoked from the command-line.
 You can also `try it in your browser
