@@ -7,7 +7,8 @@ cache:
 
 env:
   matrix:
-    - TASK=lint
+    - env: TASK=lint
+      python: "3.5"
 
 script:
   - make $TASK
