@@ -11,6 +11,7 @@ cache:
 env:
   matrix:
     - env: TASK=lint
+    - env: TASK=check-format
 
 script:
   - make $TASK
