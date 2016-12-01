@@ -1,6 +1,12 @@
 Release History
 ===============
 
+0.2.0 (2016-12-01)
+******************
+
+- Replace the unfriendly RGB tuples for specifying color with hex.
+- General code tidies and clean-ups.
+
 0.1.0 (2016-11-30)
 ******************
 
