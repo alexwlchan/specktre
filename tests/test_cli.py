@@ -57,7 +57,8 @@ class TestColorParsing(object):
 
     @given(st.text())
     def test_bad_length_strings(self, string):
-        """Strings that are too long or too short are rejected with `ValueError`."""
+        """Strings that are too long or too short are rejected with
+        `ValueError`."""
         assume(not string.startswith('#'))
         assume(len(string) != 6)
         with pytest.raises(ValueError) as exc:
