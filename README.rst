@@ -21,6 +21,14 @@ To install specktre, just run:
 
    $ pip install specktre
 
+Alternatively, you can use `pipsi <https://github.com/mitsuhiko/pipsi>`_
+
+.. code-block:: console
+
+   $ pipsi install specktre
+
+specktre will run with Python 2.7, 3.3+ and PyPy.
+
 Usage
 *****
 
@@ -32,6 +40,13 @@ To see a usage message, just run:
 
 There are some examples of specktre used as a script and as a library in
 the ``examples`` directory.
+
+What's in a name?
+*****************
+
+The word "speckled" came to mind when describing this pattern, and I wrote
+the first version shortly after the James Bond film *SPECTRE* had been
+released.
 
 License
 *******

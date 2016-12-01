@@ -7,19 +7,9 @@ I use the standard screen resolution for desktops/laptops, and the
 parallax sizes for iOS devices: http://dekoapp.com/parallax/
 """
 
-import os
-
-from specktre import (
-    Color,
-    save_speckled_wallpaper,
-    generate_hexagons,
-    generate_squares,
-    generate_triangles,
-    Settings,
-)
-
-
-OUTPUT_PATH = 'output'
+from specktre import create_wallpaper
+from specktre.colors import RGBColor as Color
+from specktre.tilings import (generate_hexagons, generate_squares, generate_triangles)
 
 
 wallpaper_config = [
@@ -45,11 +35,13 @@ wallpaper_config = [
 
 
 if __name__ == '__main__':
-    os.makedirs(OUTPUT_PATH, exist_ok=True)
-
-    for wallpaper in wallpaper_config:
-        settings = list(wallpaper)
-        settings[-1] = os.path.join(OUTPUT_PATH, settings[-1] + '.png')
-        settings = Settings(*settings)
-
-        save_speckled_wallpaper(settings)
+    for (generator, width, height, color1, color2, name) in wallpaper_config:
+        filename = name + '.png'
+        create_wallpaper(
+            generator=generator,
+            color1=color1,
+            color2=color2,
+            width=width,
+            height=height,
+            filename=filename)
+        print('Saved new wallpaper as %s' % filename)
