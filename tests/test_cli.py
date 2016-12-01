@@ -2,8 +2,9 @@
 # -*- encoding: utf-8 -*-
 """Unit tests for specktre.cli."""
 
-from hypothesis import assume, given, strategies as st
 import pytest
+from hypothesis import strategies as st
+from hypothesis import assume, given
 
 from specktre import cli
 from specktre.colors import RGBColor
@@ -83,8 +84,8 @@ class TestColorParsing(object):
 
     @given(st.text())
     def test_bad_color_strings(self, string):
-        """Parsing a color string either raises a `ValueError` or returns
-        an RGBColor instance."""
+        """Parsing a color string either raises a `ValueError` or returns an
+        RGBColor instance."""
         try:
             color = cli.parse_color_input(string)
             assert isinstance(color, RGBColor)

@@ -71,8 +71,9 @@ def generate_unit_triangles(image_width, image_height):
             # Add a horizontal offset on odd numbered rows
             x_ = x if (y % 2 == 0) else x + 0.5
 
-            yield [(x_, y * h), (x_+1, y * h), (x_+0.5, (y+1) * h)]
-            yield [(x_+1, y * h), (x_+1.5, (y+1) * h), (x_+0.5, (y+1) * h)]
+            yield [(x_, y * h), (x_ + 1, y * h), (x_ + 0.5, (y + 1) * h)]
+            yield [(x_ + 1, y * h), (x_ + 1.5, (y + 1) * h),
+                   (x_ + 0.5, (y + 1) * h)]
 
 
 def generate_triangles(*args, **kwargs):

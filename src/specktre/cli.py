@@ -24,7 +24,7 @@ def check_positive_integer(name, value):
         raise ValueError('%s should be positive; got %r' % (name, value))
 
 
-def parse_color_input(value):
+def check_color_input(value):
     """Check a value is a valid colour input.
 
     Returns a parsed `RGBColor` instance if so, raises ValueError

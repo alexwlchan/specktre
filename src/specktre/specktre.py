@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
-"""
-Generate checkerboard wallpaper images.
+"""Generate checkerboard wallpaper images.
 
 Usage:
   specktre.py new --size=<size> --start=<start> --end=<end> [--squares | --triangles | --hexagons] [--name=<name>]
@@ -16,7 +15,8 @@ Options:
   --triangles        Tile with triangles.
   --hexagons         Tile with hexagons.
   --name=<name>      (Optional) Name of the file to save to.
-""" # noqa
+
+"""  # noqa
 
 import collections
 import os
@@ -28,10 +28,8 @@ import docopt
 from PIL import Image, ImageDraw
 
 from . import cli
-from .cli import check_positive_integer
 from .colors import random_color
-from .tilings import generate_squares, generate_triangles, generate_hexagons
-
+from .tilings import generate_hexagons, generate_squares, generate_triangles
 
 Settings = collections.namedtuple('Settings', [
     'generator', 'width', 'height', 'start_color', 'end_color', 'name'])
@@ -54,11 +52,11 @@ def parse_args():
     except ValueError:
         sys.exit('--size should be in the form WxH; got %s' % args['--size'])
 
-    width = check_positive_integer(name='Width', value=width)
-    height = check_positive_integer(name='Height', value=height)
+    width = cli.check_positive_integer(name='Width', value=width)
+    height = cli.check_positive_integer(name='Height', value=height)
 
-    start_color = cli.parse_color_input(args['--start'])
-    end_color = cli.parse_color_input(args['--end'])
+    start_color = cli.check_color_input(args['--start'])
+    end_color = cli.check_color_input(args['--end'])
 
     name = args['--name']
 
