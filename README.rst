@@ -30,6 +30,9 @@ To see a usage message, just run:
 
    $ specktre --help
 
+There are some examples of specktre used as a script and as a library in
+the ``examples`` directory.
+
 License
 *******
 

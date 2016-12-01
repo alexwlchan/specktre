@@ -15,6 +15,11 @@ SOURCE = local_file('src')
 README = local_file('README.rst')
 long_description = codecs.open(README, encoding='utf-8').read()
 
+# For PyPI purposes, change the image link to point to GitHub
+long_description = long_description.replace(
+    'output/demo.png',
+    'https://github.com/alexwlchan/specktre/raw/master/output/demo.png')
+
 
 setup(
     name='specktre',
