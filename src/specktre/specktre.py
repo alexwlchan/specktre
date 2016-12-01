@@ -10,24 +10,12 @@ Usage:
 Options:
   -h --help          Show this screen.
   --size=<size>      Size in pixels - WxH
-  --start=<start>    Start of the color range
-  --end=<end>        End of the color range
+  --start=<start>    Start of the color range (hex, e.g. #01ab23)
+  --end=<end>        End of the color range (hex, e.g. #01ab23)
   --squares          Tile with squares.
   --triangles        Tile with triangles.
   --hexagons         Tile with hexagons.
   --name=<name>      (Optional) Name of the file to save to.
-
-Colors can be described as follows:
-
-* As RGB tuples, with values from 0-255.
-    rgb(255, 0, 0)  = red
-    rgb(0, 255, 0)  = green
-    rgb(209, 87, 0) = orange
-
-* As HSL tuples:
-    hsl(126, 100%, 50%)
-    hsl(360, 0%, 25%)
-    hsl(18, 100%, 100%)
 """ # noqa
 
 import collections
