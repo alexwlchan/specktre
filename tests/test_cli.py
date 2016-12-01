@@ -62,9 +62,9 @@ class TestColorParsing(object):
         """Test parsing RGB colour values."""
         assert cli.parse_color_input(string) == RGBColor(*expected)
 
-    @given(st.integers(min_value=0, max_value=255),
-           st.integers(min_value=0, max_value=255),
-           st.integers(min_value=0, max_value=255))
+    @given(red=st.integers(min_value=0, max_value=255),
+           green=st.integers(min_value=0, max_value=255),
+           blue=st.integers(min_value=0, max_value=255))
     def test_parsing_constructed_rgb_value(self, red, green, blue):
         """Test parsing constructed RGB values."""
         string = 'rgb(%d, %d, %d)' % (red, green, blue)
@@ -84,6 +84,73 @@ class TestColorParsing(object):
             cli.parse_color_input(bad_string)
         assert 'between 0 and 255' in exc.value.args[0]
 
+    @pytest.mark.parametrize('string, expected', [
+        # Simple examples to start with
+        ('hsl(0, 100, 100)', (255, 255, 255)),
+        ('hsl(360, 100, 100)', (255, 255, 255)),
+        ('hsl(25, 100, 41)', (209, 87, 0)),
+        ('hsl(123, 100, 50)', (0, 255, 12)),
+
+        # Mucking about with the case is okay
+        ('HSL(0, 100, 100)', (255, 255, 255)),
+        ('hSl(0, 100, 100)', (255, 255, 255)),
+        ('HsL(0, 100, 100)', (255, 255, 255)),
+
+        # As is varying the amount of whitespace
+        ('hsl(151,100,50)', (0, 255, 131)),
+        ('hsl(151,   100,   50)', (0, 255, 131)),
+        ('hsl(151,100,    50)', (0, 255, 131)),
+
+        # And percentage signs on saturation/lightness
+        ('hsl(126, 100%, 50)', (0, 255, 25)),
+        ('hsl(126, 100, 50%)', (0, 255, 25)),
+        ('hsl(126, 100%, 50%)', (0, 255, 25)),
+    ])
+    def test_parsing_hsl_value(self, string, expected):
+        """Test parsing HSL colour values."""
+        assert cli.parse_color_input(string) == RGBColor(*expected)
+
+    @given(hue=st.integers(min_value=0, max_value=255),
+           saturation=st.integers(min_value=0, max_value=100),
+           lightness=st.integers(min_value=0, max_value=100))
+    def test_parsing_constructed_hsl_value(self, hue, saturation, lightness):
+        """Test parsing constructed HSL values doesn't crash."""
+        string = 'hsl(%d, %d, %d)' % (hue, saturation, lightness)
+        cli.parse_color_input(string)
+
+    @pytest.mark.parametrize('bad_string', [
+        'hsl(361, 0, 0)',
+        'hsl(400, 0, 0)',
+        'hsl(1000, 0, 0)',
+    ])
+    def test_bad_hsl_hue(self, bad_string):
+        """An HSL with hue >360 is rejected with `ValueError`."""
+        with pytest.raises(ValueError) as exc:
+            cli.parse_color_input(bad_string)
+        assert 'Hue should be between 0 and 360' in exc.value.args[0]
+
+    @pytest.mark.parametrize('bad_string', [
+        'hsl(0, 101, 0)',
+        'hsl(0, 200, 0)',
+        'hsl(0, 364, 0)',
+    ])
+    def test_bad_hsl_saturation(self, bad_string):
+        """An HSL with saturation >100 is rejected with `ValueError`."""
+        with pytest.raises(ValueError) as exc:
+            cli.parse_color_input(bad_string)
+        assert 'Saturation should be between 0 and 100' in exc.value.args[0]
+
+    @pytest.mark.parametrize('bad_string', [
+        'hsl(0, 0, 101)',
+        'hsl(0, 0, 200)',
+        'hsl(0, 0, 364)',
+    ])
+    def test_bad_hsl_lightness(self, bad_string):
+        """An HSL with lightness >100 is rejected with `ValueError`."""
+        with pytest.raises(ValueError) as exc:
+            cli.parse_color_input(bad_string)
+        assert 'Lightness should be between 0 and 100' in exc.value.args[0]
+
     @given(st.text())
     def test_bad_rgb_string(self, bad_string):
         """Something that looks like an RGB colour but isn't is rejected
@@ -91,3 +158,20 @@ class TestColorParsing(object):
         with pytest.raises(ValueError) as exc:
             cli.parse_color_input('rgb' + bad_string)
         assert 'Invalid RGB colour' in exc.value.args[0]
+
+    @given(st.text())
+    def test_bad_hsl_string(self, bad_string):
+        """Something that looks like an HSL colour but isn't is rejected
+        with `ValueError`."""
+        with pytest.raises(ValueError) as exc:
+            cli.parse_color_input('hsl' + bad_string)
+        assert 'Invalid HSL colour' in exc.value.args[0]
+
+    @given(st.text())
+    def test_bad_color_strings(self, bad_string):
+        """Test that any strings that don't look correct are rejected with
+        `ValueError`."""
+        assume(not bad_string.lower().strip().startswith(('rgb', 'hsl', '#')))
+        with pytest.raises(ValueError) as exc:
+            cli.parse_color_input(bad_string)
+        assert 'Unrecognised colour:' in exc.value.args[0]

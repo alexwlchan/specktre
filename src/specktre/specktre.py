@@ -23,6 +23,11 @@ Colors can be described as follows:
     rgb(255, 0, 0)  = red
     rgb(0, 255, 0)  = green
     rgb(209, 87, 0) = orange
+
+* As HSL tuples:
+    hsl(126, 100%, 50%)
+    hsl(360, 0%, 25%)
+    hsl(18, 100%, 100%)
 """ # noqa
 
 import collections
@@ -36,7 +41,7 @@ from PIL import Image, ImageDraw
 
 from . import cli
 from .cli import check_positive_integer
-from .colors import Color, random_color
+from .colors import random_color
 from .tilings import generate_squares, generate_triangles, generate_hexagons
 
 
