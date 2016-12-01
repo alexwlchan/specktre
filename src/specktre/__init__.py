@@ -47,7 +47,7 @@ def main():
         filename = new_filename()
 
     create_wallpaper(
-        generator=generator_names[args.shape],
+        generator=generator,
         color1=args.color1,
         color2=args.color2,
         width=args.width,
