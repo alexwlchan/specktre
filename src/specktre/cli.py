@@ -31,6 +31,7 @@ def check_color_input(value):
     otherwise.
 
     """
+    orig_value = value
     value = value.lower()
     # Trim a leading hash
     if value.startswith('#'):
@@ -38,12 +39,11 @@ def check_color_input(value):
 
     if len(value) != 6:
         raise ValueError(
-            'Color should be six hexadecimal digits, got %r (%s)' %
-            (value, len(value)))
+            'Color should be six hexadecimal digits, got %r' % orig_value)
 
     if re.sub(r'[a-f0-9]', '', value):
         raise ValueError(
-            'Color should only contain hex characters, got %r' % value)
+            'Color should only contain hex characters, got %r' % orig_value)
 
     red = int(value[0:2], base=16)
     green = int(value[2:4], base=16)
