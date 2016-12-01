@@ -10,8 +10,8 @@ Usage:
 Options:
   -h --help          Show this screen.
   --size=<size>      Size in pixels - WxH
-  --start=<start>    Start of the color range (RGB tuple, e.g '255,0,0')
-  --end=<end>        End of the color range (RGB tuple, e.g. '0,255,0')
+  --start=<start>    Start of the color range (hex, e.g. #01ab23)
+  --end=<end>        End of the color range (hex, e.g. #01ab23)
   --squares          Tile with squares.
   --triangles        Tile with triangles.
   --hexagons         Tile with hexagons.
@@ -27,37 +27,14 @@ import sys
 import docopt
 from PIL import Image, ImageDraw
 
-from .colors import Color, random_color
+from . import cli
+from .cli import check_positive_integer
+from .colors import random_color
 from .tilings import generate_squares, generate_triangles, generate_hexagons
 
 
 Settings = collections.namedtuple('Settings', [
     'generator', 'width', 'height', 'start_color', 'end_color', 'name'])
-
-
-def _positive_integer_arg(arg_value, arg_name):
-    """Checks a value is a positive integer, or exists."""
-    try:
-        value = int(arg_value)
-        if value <= 0:
-            sys.exit('%s should be positive; got %r' % (arg_name, arg_value))
-        return value
-    except ValueError:
-        sys.exit('%s should be an integer; got %r' % (arg_name, arg_value))
-
-
-def _parse_color_components(arg_value, arg_name):
-    """Checks a value can be parsed as an RGB tuple."""
-    try:
-        r, g, b = arg_value.split(',')
-        r = int(r)
-        g = int(g)
-        b = int(b)
-        if any(0 > x or 255 < x for x in (r, g, b)):
-            sys.exit('Color components should be 0 < X < 255')
-        return Color(r, g, b)
-    except ValueError:
-        sys.exit('%s should be an R,G,B tuple; got %r' % (arg_name, arg_value))
 
 
 def parse_args():
@@ -77,12 +54,11 @@ def parse_args():
     except ValueError:
         sys.exit('--size should be in the form WxH; got %s' % args['--size'])
 
-    width = _positive_integer_arg(width, arg_name='Width')
-    height = _positive_integer_arg(height, arg_name='Height')
+    width = check_positive_integer(name='Width', value=width)
+    height = check_positive_integer(name='Height', value=height)
 
-    start_color = _parse_color_components(args['--start'],
-                                          arg_name='Start color')
-    end_color = _parse_color_components(args['--end'], arg_name='End color')
+    start_color = cli.parse_color_input(args['--start'])
+    end_color = cli.parse_color_input(args['--end'])
 
     name = args['--name']
 
