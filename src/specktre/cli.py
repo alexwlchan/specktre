@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
 """Utilities for parsing input from the command-line."""
 
-import colorsys
 import re
 
 from .colors import RGBColor
@@ -38,10 +37,13 @@ def parse_color_input(value):
         value = value[1:]
 
     if len(value) != 6:
-        raise ValueError('Color should be six hexadecimal digits, got %r (%s)' % (value, len(value)))
+        raise ValueError(
+            'Color should be six hexadecimal digits, got %r (%s)' %
+            (value, len(value)))
 
     if re.sub(r'[a-f0-9]', '', value):
-        raise ValueError('Color should only contain hex characters, got %r' % value)
+        raise ValueError(
+            'Color should only contain hex characters, got %r' % value)
 
     red = int(value[0:2], base=16)
     green = int(value[2:4], base=16)
