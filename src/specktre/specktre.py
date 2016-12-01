@@ -18,9 +18,6 @@ Options:
 """  # noqa
 
 import collections
-import os
-import random
-import string
 import sys
 
 import docopt
