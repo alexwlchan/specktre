@@ -1,20 +1,15 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
-"""
-Generate regular tilings of the plane with Pillow.
+"""Generate coordinates for tilings of the plane.
 
 Diagrams and background to this code are on my blog:
 http://alexwlchan.net/2016/10/tiling-the-plane-with-pillow/
+
 """
 
 from __future__ import division
 
 import math
-
-from PIL import Image, ImageDraw
-
-CANVAS_WIDTH  = 400  # noqa
-CANVAS_HEIGHT = 400
 
 
 def _scale_coordinates(generator, image_width, image_height, side_length=50):
@@ -137,20 +132,3 @@ def generate_unit_hexagons(image_width, image_height):
 def generate_hexagons(*args, **kwargs):
     """Generate coordinates for a tiling of hexagons."""
     return _scale_coordinates(generate_unit_hexagons, *args, **kwargs)
-
-
-def draw_tiling(coord_generator, filename):
-    """
-    Given a coordinate generator and a filename, render those coordinates
-    in a new image and save them to the file.
-    """
-    im = Image.new('L', size=(CANVAS_WIDTH, CANVAS_HEIGHT))
-    for shape in coord_generator(CANVAS_WIDTH, CANVAS_HEIGHT):
-        ImageDraw.Draw(im).polygon(shape, outline='white')
-    im.save(filename)
-
-
-if __name__ == '__main__':
-    draw_tiling(generate_squares,   filename='squares.png')
-    draw_tiling(generate_triangles, filename='triangles.png')
-    draw_tiling(generate_hexagons,  filename='hexagons.png')

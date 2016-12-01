@@ -6,3 +6,8 @@ dist/*
 .cache
 .coverage
 .hypothesis
+
+# Output from the provided examples
+hexagons.png
+squares.png
+triangles.png
