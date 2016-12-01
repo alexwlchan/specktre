@@ -10,8 +10,8 @@ cache:
 
 env:
   matrix:
-    - env: TASK=lint
-    - env: TASK=check-format
+    - TASK=lint
+    - TASK=check-format
 
 script:
   - make $TASK
