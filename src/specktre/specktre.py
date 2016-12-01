@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 """Generate checkerboard wallpaper images.
 
@@ -8,7 +7,7 @@ Usage:
 
 Options:
   -h --help          Show this screen.
-  --size=<size>      Size in pixels - WxH
+  --size=<size>      Size in pixels - WxH (e.g. 100x200)
   --start=<start>    Start of the color range (hex, e.g. #01ab23)
   --end=<end>        End of the color range (hex, e.g. #01ab23)
   --squares          Tile with squares.
@@ -30,6 +29,7 @@ from PIL import Image, ImageDraw
 from . import cli
 from .colors import random_color
 from .tilings import generate_hexagons, generate_squares, generate_triangles
+from .utils import new_filename
 
 Settings = collections.namedtuple('Settings', [
     'generator', 'width', 'height', 'start_color', 'end_color', 'name'])
@@ -70,21 +70,6 @@ def parse_args():
     )
 
 
-def _generate_filenames():
-    while True:
-        random_stub = ''.join([
-            random.choice(string.ascii_letters + string.digits)
-            for _ in range(5)
-        ])
-        yield 'specktre_%s.png' % random_stub
-
-
-def get_new_filename():
-    for filename in _generate_filenames():
-        if not os.path.exists(filename):
-            return filename
-
-
 def draw_speckled_wallpaper(settings):
     im = Image.new(mode='RGB', size=(settings.width, settings.height))
     squares = settings.generator(settings.width, settings.height)
@@ -100,7 +85,7 @@ def save_speckled_wallpaper(settings):
     if settings.name:
         filename = settings.name
     else:
-        filename = get_new_filename()
+        filename = new_filename()
     im.save(filename)
     print('Saved new wallpaper as %s' % filename)
 
