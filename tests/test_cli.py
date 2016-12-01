@@ -2,8 +2,9 @@
 # -*- encoding: utf-8 -*-
 """Unit tests for specktre.cli."""
 
-from hypothesis import assume, given, strategies as st
 import pytest
+from hypothesis import strategies as st
+from hypothesis import assume, given
 
 from specktre import cli
 from specktre.colors import RGBColor
@@ -35,7 +36,7 @@ class TestCheckPositiveInteger(object):
 
 
 class TestColorParsing(object):
-    """Unit tests for `parse_color_input`."""
+    """Unit tests for `check_color_input`."""
 
     @given(
         red=st.integers(min_value=0, max_value=255),
@@ -53,7 +54,7 @@ class TestColorParsing(object):
         if uppercase:
             string = string.upper()
         expected = RGBColor(red, green, blue)
-        assert cli.parse_color_input(string) == expected
+        assert cli.check_color_input(string) == expected
 
     @given(st.text())
     def test_bad_length_strings(self, string):
@@ -62,31 +63,26 @@ class TestColorParsing(object):
         assume(not string.startswith('#'))
         assume(len(string) != 6)
         with pytest.raises(ValueError) as exc:
-            cli.parse_color_input(string)
+            cli.check_color_input(string)
         assert 'six hexadecimal digits' in exc.value.args[0]
 
     @given(st.text(min_size=6, max_size=6))
     def test_bad_hex_strings(self, string):
         """Strings that contain non-hex characters are rejected with
         `ValueError`."""
-        # This can be false on 'interesting' Unicode strings
-        assume(len(string) == 6)
-        with open('awlc.txt', 'a', encoding='utf-8') as f:
-            f.write('%s %d\n' % (string, len(string)))
-            f.write('%s %d\n' % (string.lower(), len(string.lower())))
-
+        assume(len(string.lower()) == 6)
         assume(not string.startswith('#'))
         assume(any(x not in '0123456789abcdef' for x in string.lower()))
         with pytest.raises(ValueError) as exc:
-            cli.parse_color_input(string)
+            cli.check_color_input(string)
         assert 'only contain hex characters' in exc.value.args[0]
 
     @given(st.text())
     def test_bad_color_strings(self, string):
-        """Parsing a color string either raises a `ValueError` or returns
-        an RGBColor instance."""
+        """Parsing a color string either raises a `ValueError` or returns an
+        RGBColor instance."""
         try:
-            color = cli.parse_color_input(string)
+            color = cli.check_color_input(string)
             assert isinstance(color, RGBColor)
         except ValueError:
             assert True

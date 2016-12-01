@@ -1,0 +1,4 @@
+coverage
+hypothesis
+pytest
+pytest-cov

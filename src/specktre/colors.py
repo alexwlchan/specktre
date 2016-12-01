@@ -5,7 +5,6 @@ import collections
 import random
 import warnings
 
-
 RGBColor = collections.namedtuple('RGBColor', ['red', 'green', 'blue'])
 
 

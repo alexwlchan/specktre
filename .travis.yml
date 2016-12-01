@@ -10,7 +10,11 @@ cache:
 
 env:
   matrix:
-    - env: TASK=lint
+    - TASK=lint
+    - TASK=check-format
+    - TASK=check-py27
+    - TASK=check-py35
+    - TASK=check-pypy
 
 script:
   - make $TASK
