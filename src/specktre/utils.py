@@ -24,8 +24,9 @@ def _candidate_filenames():
 def new_filename():
     """Returns a filename for a new specktre image.
 
-    This filename is of the form 'specktre_123AB.png' and does not already
-    exist when this function is called.
+    This filename is of the form 'specktre_123AB.png' and does not
+    already exist when this function is called.
+
     """
     for filename in _candidate_filenames():
         if not os.path.exists(filename):
@@ -35,4 +36,4 @@ def new_filename():
     # millions of options, this branch should never be hit in practice.
     # Keeps coverage happy.
     else:
-        assert False, "Should not be reachable"
+        assert False, 'Should not be reachable'

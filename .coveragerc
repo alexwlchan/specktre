@@ -7,4 +7,4 @@ include =
 show_missing = True
 exclude_lines =
     pragma: no cover
-    assert False, "Should not be reachable"
+    assert False, 'Should not be reachable'

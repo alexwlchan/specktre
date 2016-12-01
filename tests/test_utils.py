@@ -9,8 +9,8 @@ from specktre.utils import new_filename
 
 
 def test_new_filename_always_gives_non_existent_file(tmpdir):
-    """Calling `new_filename()` always returns a filename that doesn't
-    exist yet."""
+    """Calling `new_filename()` always returns a filename that doesn't exist
+    yet."""
     old_dir = os.curdir
     tmpdir.chdir()
 
