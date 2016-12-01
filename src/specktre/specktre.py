@@ -10,12 +10,19 @@ Usage:
 Options:
   -h --help          Show this screen.
   --size=<size>      Size in pixels - WxH
-  --start=<start>    Start of the color range (RGB tuple, e.g '255,0,0')
-  --end=<end>        End of the color range (RGB tuple, e.g. '0,255,0')
+  --start=<start>    Start of the color range
+  --end=<end>        End of the color range
   --squares          Tile with squares.
   --triangles        Tile with triangles.
   --hexagons         Tile with hexagons.
   --name=<name>      (Optional) Name of the file to save to.
+
+Colors can be described as follows:
+
+* As RGB tuples, with values from 0-255.
+    rgb(255, 0, 0)  = red
+    rgb(0, 255, 0)  = green
+    rgb(209, 87, 0) = orange
 """ # noqa
 
 import collections
@@ -27,6 +34,7 @@ import sys
 import docopt
 from PIL import Image, ImageDraw
 
+from . import cli
 from .cli import check_positive_integer
 from .colors import Color, random_color
 from .tilings import generate_squares, generate_triangles, generate_hexagons
@@ -34,20 +42,6 @@ from .tilings import generate_squares, generate_triangles, generate_hexagons
 
 Settings = collections.namedtuple('Settings', [
     'generator', 'width', 'height', 'start_color', 'end_color', 'name'])
-
-
-def _parse_color_components(arg_value, arg_name):
-    """Checks a value can be parsed as an RGB tuple."""
-    try:
-        r, g, b = arg_value.split(',')
-        r = int(r)
-        g = int(g)
-        b = int(b)
-        if any(0 > x or 255 < x for x in (r, g, b)):
-            sys.exit('Color components should be 0 < X < 255')
-        return Color(r, g, b)
-    except ValueError:
-        sys.exit('%s should be an R,G,B tuple; got %r' % (arg_name, arg_value))
 
 
 def parse_args():
@@ -70,9 +64,8 @@ def parse_args():
     width = check_positive_integer(name='Width', value=width)
     height = check_positive_integer(name='Height', value=height)
 
-    start_color = _parse_color_components(args['--start'],
-                                          arg_name='Start color')
-    end_color = _parse_color_components(args['--end'], arg_name='End color')
+    start_color = cli.parse_color_input(args['--start'])
+    end_color = cli.parse_color_input(args['--end'])
 
     name = args['--name']
 
