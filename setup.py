@@ -47,7 +47,6 @@ setup(
     packages=find_packages(SOURCE),
     package_dir={'': SOURCE},
     install_requires=[
-        'docopt',
         'Pillow',
     ],
 
