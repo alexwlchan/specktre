@@ -3,8 +3,21 @@
 
 import codecs
 import os
+import re
 
 from setuptools import find_packages, setup
+
+
+# Get the version.  Stolen from Cory Benfield.
+version_regex = r'__version__ = ["\']([^"\']*)["\']'
+with open('src/specktre/__init__.py', 'r') as f:
+    text = f.read()
+    match = re.search(version_regex, text)
+
+    if match:
+        version = match.group(1)
+    else:
+        raise RuntimeError("No version number found!")
 
 
 def local_file(name):
@@ -23,7 +36,7 @@ long_description = long_description.replace(
 
 setup(
     name='specktre',
-    version='0.2.0',
+    version=version,
     description='A tool for creating wallpapers with Python',
     long_description=long_description,
     url='https://github.com/alexwlchan/specktre',

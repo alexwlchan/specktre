@@ -8,11 +8,14 @@ import sys
 from .colors import RGBColor
 
 
-def parse_args():
+def parse_args(version):
     """Parse command-line arguments."""
     parser = argparse.ArgumentParser(
         description='specktre.  Create checkerboard wallpaper images.')
     subparsers = parser.add_subparsers(dest='subparser_name')
+
+    parser.add_argument('--version', action='version',
+                        version='%(prog)s ' + version)
 
     img_parser = subparsers.add_parser('image',
                                        description='Create a new image.')

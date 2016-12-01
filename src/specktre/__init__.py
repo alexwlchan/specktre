@@ -8,8 +8,11 @@ from .tilings import generate_hexagons, generate_squares, generate_triangles
 from .utils import new_filename
 
 
+__version__ = '0.3.0'
+
+
 def main():
-    args = parse_args()
+    args = parse_args(version=__version__)
 
     generator_names = {
         'hexagons': generate_hexagons,
