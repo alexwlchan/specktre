@@ -10,8 +10,9 @@ from flask import abort, render_template, send_file
 from flaskapp import app, forms
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from specktre import generate_squares, generate_triangles, generate_hexagons
-from specktre import Color, save_speckled_wallpaper, Settings
+from specktre.colors import Color
+from specktre.specktre import save_speckled_wallpaper, Settings
+from specktre.tilings import generate_squares, generate_triangles, generate_hexagons
 
 SHAPE_TO_GENERATOR = {
     'squares': generate_squares,
@@ -41,7 +42,7 @@ def hex_to_rgb(hex_str):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     form = forms.SpecktreForm()
-    
+
     errors = []
     shape_url = None
     if form.validate_on_submit():
@@ -68,7 +69,7 @@ def index():
         errors.extend(form.colorB.errors)
         errors.extend(form.width.errors)
         errors.extend(form.height.errors)
-    
+
     return render_template(
         'index.html',
         form=form,
@@ -89,8 +90,8 @@ def display_image(shape_url):
     except KeyError:
         abort(404)
     return send_file(os.path.join(TEMPDIR, filename))
-    
-    
+
+
 @app.route('/background')
 def background():
     img = random.choice([l for l in os.listdir('flaskapp/static') if l.endswith('.png')])
