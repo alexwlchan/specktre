@@ -6,6 +6,7 @@ dist/*
 .cache
 .coverage
 .hypothesis
+.DS_Store
 
 # Output from the provided examples
 hexagons.png
