@@ -2,18 +2,9 @@
 
 Specktre is a tool for generating low-contrast desktop wallpapers from tiling patterns.  Here are some examples of the sort of pattern it produces:
 
-<table>
-  <tr>
-    <td><img src="output/demo_sq.png"> Squares</td>
-    <td><img src="output/demo_tr.png"> Triangles</td>
-    <td><img src="output/demo_hex.png"> Hexagons</td>
-  </tr>
-</table>
+![](output/demo.png)
 
 It can be used as a Python library, or invoked from the command-line.
-You can also [try it in your browser][demo]!
-
-[demo]: https://alexwlchan.net/experiments/specktre/
 
 ## What's in the repo?
 
