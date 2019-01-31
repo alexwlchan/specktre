@@ -20,7 +20,7 @@ def random_color(start, end):
     d_blue = (start.blue - end.blue)
     while True:
         chosen_d = random.uniform(0, 1)
-        yield Color(
+        yield RGBColor(
             start.red - int(d_red * chosen_d),
             start.green - int(d_green * chosen_d),
             start.blue - int(d_blue * chosen_d)
