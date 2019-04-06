@@ -1,10 +1,16 @@
 # -*- encoding: utf-8 -*-
 """Generate random colors between two other colors."""
 
-import collections
 import random
 
-RGBColor = collections.namedtuple('RGBColor', ['red', 'green', 'blue'])
+import attr
+
+
+@attr.s
+class RGBColor(object):
+    red = attr.ib()
+    green = attr.ib()
+    blue = attr.ib()
 
 
 def random_color(start, end):
