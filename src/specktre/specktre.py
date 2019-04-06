@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+import sys
+
 from PIL import Image, ImageDraw
 
 from . import cli
@@ -28,5 +30,5 @@ def save_speckled_wallpaper(settings):
 
 
 def main():
-    settings = cli.parse_args()
+    settings = cli.parse_args(sys.argv)
     save_speckled_wallpaper(settings)

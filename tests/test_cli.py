@@ -8,6 +8,7 @@ from hypothesis import assume, given
 
 from specktre import cli
 from specktre.colors import RGBColor
+from specktre.tilings import generate_hexagons, generate_squares, generate_triangles
 
 
 class TestCheckPositiveInteger(object):
@@ -86,3 +87,37 @@ class TestColorParsing(object):
             assert isinstance(color, RGBColor)
         except ValueError:
             assert True
+
+
+class TestArgParsing:
+
+    def test_default_generator_is_squares(self):
+        settings = cli.parse_args([
+            "new", "--size", "10x10", "--start", "000000", "--end", "000000"
+        ])
+        assert settings.generator == generate_squares
+
+    def test_selects_squares(self):
+        settings = cli.parse_args([
+            "new", "--squares", "--size", "10x10", "--start", "000000", "--end", "000000"
+        ])
+        assert settings.generator == generate_squares
+
+    def test_selects_hexagons(self):
+        settings = cli.parse_args([
+            "new", "--hexagons", "--size", "10x10", "--start", "000000", "--end", "000000"
+        ])
+        assert settings.generator == generate_hexagons
+
+    def test_selects_triangles(self):
+        settings = cli.parse_args([
+            "new", "--triangles", "--size", "10x10", "--start", "000000", "--end", "000000"
+        ])
+        assert settings.generator == generate_triangles
+
+    @pytest.mark.parametrize("bad_size", ["10x", "x10", "x", "1y1"])
+    def test_invalid_size_is_systemexit(self, bad_size):
+        with pytest.raises(SystemExit, match="size should be in the form WxH"):
+            cli.parse_args([
+                "new", "--size", bad_size, "--start", "000000", "--end", "000000"
+            ])

@@ -82,8 +82,8 @@ def check_color_input(value):
     return RGBColor(red, green, blue)
 
 
-def parse_args():
-    args = docopt.docopt(__doc__)
+def parse_args(argv):
+    args = docopt.docopt(__doc__, argv)
 
     if args['--squares']:
         generator = generate_squares
@@ -96,11 +96,10 @@ def parse_args():
 
     try:
         width, height = args['--size'].split('x')
+        width = check_positive_integer(name='Width', value=width)
+        height = check_positive_integer(name='Height', value=height)
     except ValueError:
         sys.exit('--size should be in the form WxH; got %s' % args['--size'])
-
-    width = check_positive_integer(name='Width', value=width)
-    height = check_positive_integer(name='Height', value=height)
 
     start_color = check_color_input(args['--start'])
     end_color = check_color_input(args['--end'])
