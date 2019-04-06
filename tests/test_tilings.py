@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from specktre.tilings import generate_squares, generate_triangles
+from specktre.tilings import generate_squares
 
 
 def test_generate_squares():

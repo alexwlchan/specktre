@@ -99,19 +99,22 @@ class TestArgParsing:
 
     def test_selects_squares(self):
         settings = cli.parse_args([
-            "new", "--squares", "--size", "10x10", "--start", "000000", "--end", "000000"
+            "new", "--squares",
+            "--size", "10x10", "--start", "000000", "--end", "000000"
         ])
         assert settings.generator == generate_squares
 
     def test_selects_hexagons(self):
         settings = cli.parse_args([
-            "new", "--hexagons", "--size", "10x10", "--start", "000000", "--end", "000000"
+            "new", "--hexagons",
+            "--size", "10x10", "--start", "000000", "--end", "000000"
         ])
         assert settings.generator == generate_hexagons
 
     def test_selects_triangles(self):
         settings = cli.parse_args([
-            "new", "--triangles", "--size", "10x10", "--start", "000000", "--end", "000000"
+            "new", "--triangles",
+            "--size", "10x10", "--start", "000000", "--end", "000000"
         ])
         assert settings.generator == generate_triangles
 
