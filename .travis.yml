@@ -1,9 +1,14 @@
 language: python
+
 sudo: false
 
 cache:
   directories:
     - $HOME/.cache/pip
+
+branches:
+  only:
+    - "development"
 
 matrix:
   include:
