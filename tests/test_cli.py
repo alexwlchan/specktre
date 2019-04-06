@@ -8,7 +8,11 @@ from hypothesis import assume, given
 
 from specktre import cli
 from specktre.colors import RGBColor
-from specktre.tilings import generate_hexagons, generate_squares, generate_triangles
+from specktre.tilings import (
+    generate_hexagons,
+    generate_squares,
+    generate_triangles
+)
 
 
 class TestCheckPositiveInteger(object):
@@ -122,5 +126,6 @@ class TestArgParsing:
     def test_invalid_size_is_systemexit(self, bad_size):
         with pytest.raises(SystemExit, match="size should be in the form WxH"):
             cli.parse_args([
-                "new", "--size", bad_size, "--start", "000000", "--end", "000000"
+                "new", "--size", bad_size,
+                "--start", "000000", "--end", "000000"
             ])
