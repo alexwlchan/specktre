@@ -1,19 +1,20 @@
 language: python
 sudo: false
 
-python:
-  - "3.5"
-
 cache:
   directories:
     - $HOME/.cache/pip
 
-env:
-  matrix:
-    - TASK=lint
-    - TASK=check-py27
-    - TASK=check-py35
-    - TASK=check-py36
+matrix:
+  include:
+    - env: TASK=lint
+      python: "3.6"
+    - env: TASK=check-py27
+      python: "2.7"
+    - env: TASK=check-py35
+      python: "3.5"
+    - env: TASK=check-py36
+      python: "3.6"
 
 script:
   - make $TASK
