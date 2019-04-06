@@ -7,6 +7,7 @@ dist/*
 .coverage
 .hypothesis
 .DS_Store
+*.pyc
 
 # Output from the provided examples
 hexagons.png
