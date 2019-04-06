@@ -14,7 +14,6 @@ env:
     - TASK=check-py27
     - TASK=check-py35
     - TASK=check-py36
-      python: "3.6"
 
 script:
   - make $TASK
