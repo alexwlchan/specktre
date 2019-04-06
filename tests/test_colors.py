@@ -2,11 +2,10 @@
 # -*- encoding: utf-8 -*-
 """Unit tests for specktre.colors."""
 
-import pytest
 from hypothesis import strategies as st
 from hypothesis import given
 
-from specktre.colors import Color, RGBColor, random_color
+from specktre.colors import RGBColor, random_color
 
 
 def color_strategy():
@@ -17,12 +16,6 @@ def color_strategy():
         st.integers(min_value=0, max_value=255),
         st.integers(min_value=0, max_value=255),
     )
-
-
-def test_using_color_gives_deprecation_warning():
-    """Using the `Color` class gives a deprecation warning."""
-    with pytest.warns(DeprecationWarning):
-        Color(red=1, green=2, blue=3)
 
 
 @given(color_strategy())

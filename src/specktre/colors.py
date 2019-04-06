@@ -1,17 +1,16 @@
 # -*- encoding: utf-8 -*-
 """Generate random colors between two other colors."""
 
-import collections
 import random
-import warnings
 
-RGBColor = collections.namedtuple('RGBColor', ['red', 'green', 'blue'])
+import attr
 
 
-def Color(*args, **kwargs):
-    warnings.warn('Color is deprecated, use RGBColor instead.',
-                  DeprecationWarning)
-    return RGBColor(*args, **kwargs)
+@attr.s
+class RGBColor(object):
+    red = attr.ib()
+    green = attr.ib()
+    blue = attr.ib()
 
 
 def random_color(start, end):
