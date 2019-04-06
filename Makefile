@@ -13,5 +13,5 @@ check-py27:
 check-py35:
 	tox -e py35
 
-check-pypy:
-	tox -e pypy
+check-py36:
+	tox -e py36
