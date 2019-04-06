@@ -3,15 +3,8 @@
 
 import collections
 import random
-import warnings
 
 RGBColor = collections.namedtuple('RGBColor', ['red', 'green', 'blue'])
-
-
-def Color(*args, **kwargs):
-    warnings.warn('Color is deprecated, use RGBColor instead.',
-                  DeprecationWarning)
-    return RGBColor(*args, **kwargs)
 
 
 def random_color(start, end):
