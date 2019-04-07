@@ -23,7 +23,7 @@ long_description = long_description.replace(
 
 setup(
     name='specktre',
-    version='0.3.0',
+    version='0.3.1',
     description='A tool for creating wallpapers with Python',
     long_description=long_description,
     url='https://github.com/alexwlchan/specktre',
