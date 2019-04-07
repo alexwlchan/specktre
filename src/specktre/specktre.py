@@ -29,6 +29,6 @@ def save_speckled_wallpaper(settings):
     print('Saved new wallpaper as %s' % filename)
 
 
-def main():
+def main():  # pragma: no cover
     settings = cli.parse_args(sys.argv[1:])
     save_speckled_wallpaper(settings)
