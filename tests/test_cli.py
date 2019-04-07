@@ -34,7 +34,7 @@ class TestCheckPositiveInteger(object):
     def test_non_integers_are_valuerror(self, value):
         """Values that cannot be coerced to an integer are rejected with a
         `ValueError`."""
-        assume(not value.strip().isdigit())
+        assume(not all(c in '-0123456789 ' for c in value))
         with pytest.raises(ValueError) as exc:
             cli.check_positive_integer(name='test', value=value)
         assert 'should be an integer' in exc.value.args[0]
