@@ -14,7 +14,7 @@ def draw_speckled_wallpaper(settings):
     squares = settings.generator(settings.width, settings.height)
     colors = random_color(settings.start_color, settings.end_color)
     for sq, color in zip(squares, colors):
-        ImageDraw.Draw(im).polygon(sq, fill=color)
+        ImageDraw.Draw(im).polygon(tuple(sq), fill=color.as_tuple())
 
     return im
 
@@ -29,6 +29,6 @@ def save_speckled_wallpaper(settings):
     print('Saved new wallpaper as %s' % filename)
 
 
-def main():
-    settings = cli.parse_args(sys.argv)
+def main():  # pragma: no cover
+    settings = cli.parse_args(sys.argv[1:])
     save_speckled_wallpaper(settings)
