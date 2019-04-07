@@ -12,6 +12,9 @@ class RGBColor(object):
     green = attr.ib()
     blue = attr.ib()
 
+    def as_tuple(self):
+        return (self.red, self.green, self.blue)
+
 
 def random_color(start, end):
     d_red = (start.red - end.red)
