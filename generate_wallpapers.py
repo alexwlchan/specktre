@@ -9,13 +9,12 @@ parallax sizes for iOS devices: http://dekoapp.com/parallax/
 
 import os
 
-from specktre import (
-    Color,
-    save_speckled_wallpaper,
+from specktre.colors import Color
+from specktre.specktre import save_speckled_wallpaper, Settings
+from specktre.tilings import (
     generate_hexagons,
     generate_squares,
-    generate_triangles,
-    Settings,
+    generate_triangles
 )
 
 
@@ -38,9 +37,9 @@ wallpaper_config = [
     (generate_triangles, 2524, 2524, Color(11, 153, 46), Color(6, 86, 9),    'ipad-home'),
 
     # Demo wallpapers
-    (generate_squares,   400, 400, Color(178, 26, 16), Color(136, 25, 17),   'demo_sq'),
-    (generate_triangles, 400, 400, Color(255, 204, 0), Color(255, 238, 56),  'demo_tr'),
-    (generate_hexagons,  400, 400, Color(56, 56, 255), Color(0, 0, 194),     'demo_hex'),
+    (generate_squares,   444, 444, Color(178, 26, 16), Color(136, 25, 17),   'demo_sq'),
+    (generate_triangles, 444, 444, Color(255, 204, 0), Color(255, 238, 56),  'demo_tr'),
+    (generate_hexagons,  444, 444, Color(56, 56, 255), Color(0, 0, 194),     'demo_hex'),
 ]
 
 
