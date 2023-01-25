@@ -66,7 +66,7 @@ def generate_unit_triangles(image_width, image_height):
     h = math.sin(math.pi / 3)
 
     for x in range(-1, image_width):
-        for y in range(int(image_height / h)):
+        for y in range(math.ceil(image_height / h)):
 
             # Add a horizontal offset on odd numbered rows
             x_ = x if (y % 2 == 0) else x + 0.5
